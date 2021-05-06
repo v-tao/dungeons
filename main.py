@@ -13,8 +13,14 @@ maze = Maze(Default.MAZE_WIDTH, Default.MAZE_HEIGHT)
 maze.generate()
 maze.populate()
 maze.print()
-print(maze.legal_moves(player.pos))
 
 # while player.pos != (maze.height-2, maze.width-2):
+print("What direction would you like to move in?")
+for direction in maze.legal_moves(player.pos):
+    print(str(direction.value) + " - " + str(direction.name))
+choice = input()
+while int(choice) not in [direction.value for direction in maze.legal_moves(player.pos)]:
+    print("Please pick a legal move")
+    choice = input()
     
     

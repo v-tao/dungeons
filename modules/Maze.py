@@ -1,5 +1,6 @@
 from random import randint
 from modules.Tile import Tile
+from modules.Item import Item
 from modules.Character import Character
 from enums.DEFAULT import Default
 from enums.TILE_TYPES import TileTypes
@@ -47,14 +48,12 @@ class Maze:
     def generate_coordinates(self):
         #start from (1,1)
         self.walls.remove((1, 1))
-        self.empty.append((1, 1))
         self.add_frontiers((1, 1))
         i = 0
         while self.frontiers:
             #random cell from list of frontier cells
             cell = self.frontiers[randint(0, len(self.frontiers)-1)]
             self.walls.remove(cell)
-            self.empty.append(cell)
             #neighbors = all cells in distance 2 in state passage
             neighbors = self.generate_neighbors(cell)
             #pick random neighbor
@@ -63,7 +62,6 @@ class Maze:
             #turns in between cell into passage
             new_passage = (cell[0] + shift[0], cell[1] + shift[1])
             self.walls.remove(new_passage)
-            self.empty.append(new_passage)
             #compute the frontier cells of the chosen frontier cell and add them to frontier list
             self.add_frontiers(cell)
             #remove the chosen frontier cell from the list of frontier cells
@@ -77,6 +75,7 @@ class Maze:
                 if (i, j) in self.walls:
                     self.maze[i][j] = Tile(TileTypes.WALL, (i, j))
                 else:
+                    self.empty.append((i, j))
                     self.maze[i][j] = Tile(TileTypes.EMPTY, (i, j))
         self.maze[-2][-2] = Tile(TileTypes.GOAL, (self.height-2, self.height-2))
     
@@ -84,13 +83,16 @@ class Maze:
         self.empty.remove((1,1))
         self.empty.remove((self.width-2, self.height-2))
         for i in range(self.num_characters):
-            rand_idx = randint(0, len(self.empty) - 1)
-            self.maze[self.empty[rand_idx][0]][self.empty[rand_idx][1]].update_category(TileTypes.CHARACTER)
-            self.empty.pop(rand_idx)
+            rand_coord = self.empty[randint(0, len(self.empty) - 1)]
+            character = Character("enemy", Default.HEALTH.value, Default.STRENGTH.value)
+            self.maze[rand_coord[0]][rand_coord[1]].update_tile(character, TileTypes.CHARACTER)
+            self.empty.remove(rand_coord)
         for i in range(self.num_items):
-            rand_idx = randint(0, len(self.empty) - 1)
-            self.maze[self.empty[rand_idx][0]][self.empty[rand_idx][1]].update_category(TileTypes.ITEM)
-            self.empty.pop(rand_idx)
+            rand_coord = self.empty[randint(0, len(self.empty) - 1)]
+            item = Item("item", "miscellaneous")
+            self.maze[rand_coord[0]][rand_coord[1]].update_tile(item, TileTypes.ITEM)
+            self.empty.remove(rand_coord)
+            
     def print(self):
         maze_display = [(tile.get_display() for tile in row) for row in self.maze]
         for i in range(len(maze_display)):

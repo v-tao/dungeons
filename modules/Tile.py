@@ -1,8 +1,8 @@
 from enums.TILE_TYPES import TileTypes
 class Tile:
-    def __init__(self, category, coordinate):
+    def __init__(self, category, content=None):
         self.category = category
-        self.coordinate = coordinate
+        self.content = content
         self.displays = {
             TileTypes.WALL : "▓▓▓",
             TileTypes.PLAYER : " P ",
@@ -16,6 +16,7 @@ class Tile:
     def get_display(self):
         return self.display
 
-    def update_category(self, category):
+    def update_tile(self, content, category):
+        self.content = content
         self.category = category
         self.display = self.displays[category]

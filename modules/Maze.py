@@ -94,9 +94,9 @@ class Maze:
             self.maze[rand_pos[0]][rand_pos[1]].update_tile(item, TileTypes.ITEM)
             self.empty.remove(rand_pos)
 
-    def print(self):
+    def print(self, player_pos):
         maze_display = [[tile.get_display() for tile in row] for row in self.maze]
-        maze_display[Default.POS_I.value][Default.POS_J.value] = " P "
+        maze_display[player_pos[0]][player_pos[1]] = " P "
         for i in range(len(maze_display)):
             print("".join(maze_display[i]))
     
@@ -112,3 +112,31 @@ class Maze:
             if self.is_legal(direction) and direction not in self.walls:
                 moves.append(directions[direction])
         return moves
+
+    def new_position(self, pos, move):
+        new_pos = pos
+        if move == Moves.EAST.value:
+            new_pos = (new_pos[0], new_pos[1] + 1)
+            while ((new_pos[0], new_pos[1] + 1) not in self.walls 
+            and (new_pos[0] + 1, new_pos[1]) in self.walls
+            and (new_pos[0] - 1, new_pos[1]) in self.walls):
+                new_pos = (new_pos[0], new_pos[1] + 1)
+        elif move == Moves.WEST.value:
+            new_pos = (new_pos[0], new_pos[1] - 1)
+            while ((new_pos[0], new_pos[1] - 1) not in self.walls 
+            and (new_pos[0] + 1, new_pos[1]) in self.walls
+            and (new_pos[0] - 1, new_pos[1]) in self.walls):
+                new_pos = (new_pos[0], new_pos[1] - 1)
+        elif move == Moves.NORTH.value:
+            new_pos = (new_pos[0] - 1, new_pos[1])
+            while ((new_pos[0] - 1, new_pos[1]) not in self.walls 
+            and (new_pos[0], new_pos[1] + 1) in self.walls
+            and (new_pos[0], new_pos[1] - 1) in self.walls):
+                new_pos = (new_pos[0] - 1, new_pos[1])
+        elif move == Moves.SOUTH.value:
+            new_pos = (new_pos[0] + 1, new_pos[1])
+            while ((new_pos[0] + 1, new_pos[1]) not in self.walls 
+            and (new_pos[0], new_pos[1] + 1) in self.walls
+            and (new_pos[0], new_pos[1] - 1) in self.walls):
+                new_pos = (new_pos[0] + 1, new_pos[1])
+        return new_pos

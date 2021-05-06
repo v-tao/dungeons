@@ -1,10 +1,9 @@
 from enum import IntEnum
 class TileTypes(IntEnum):
     WALL=0
-    PLAYER=1
-    GOAL=2
-    EMPTY=3
-    CHARACTER=4
-    ITEM=5
+    GOAL=1
+    EMPTY=2
+    CHARACTER=3
+    ITEM=4
 
     

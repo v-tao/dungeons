@@ -6,3 +6,5 @@ class Default(IntEnum):
     MAZE_HEIGHT = 9
     NUM_CHARACTERS = 3
     NUM_ITEMS = 3
+    POS_I = 1
+    POS_J = 1

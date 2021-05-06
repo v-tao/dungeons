@@ -22,30 +22,30 @@ class Maze:
                 self.walls.append((i, j))
             self.maze.append(maze_row)
     
-    def is_legal(self, coordinate):
-        if (coordinate[0] >= 0 and coordinate[0] < self. height
-        and coordinate[1] >= 0 and coordinate[1] < self.width):
+    def is_legal(self, pos):
+        if (pos[0] >= 0 and pos[0] < self. height
+        and pos[1] >= 0 and pos[1] < self.width):
             return True
         else:
             return False
     
-    def add_frontiers(self, coordinate):
-        candidates = [(coordinate[0] + 2, coordinate[1]), (coordinate[0] - 2, coordinate[1]), 
-        (coordinate[0], coordinate[1] + 2), (coordinate[0], coordinate[1] - 2)]
+    def add_frontiers(self, pos):
+        candidates = [(pos[0] + 2, pos[1]), (pos[0] - 2, pos[1]), 
+        (pos[0], pos[1] + 2), (pos[0], pos[1] - 2)]
         for candidate in candidates:
             if self.is_legal(candidate) and candidate in self.walls and candidate not in self.frontiers:
                 self.frontiers.append(candidate)
     
-    def generate_neighbors(self, coordinate):
+    def generate_neighbors(self, pos):
         neighbors = []
-        candidates = [(coordinate[0] + 2, coordinate[1]), (coordinate[0] - 2, coordinate[1]), 
-        (coordinate[0], coordinate[1] + 2), (coordinate[0], coordinate[1] - 2)]
+        candidates = [(pos[0] + 2, pos[1]), (pos[0] - 2, pos[1]), 
+        (pos[0], pos[1] + 2), (pos[0], pos[1] - 2)]
         for candidate in candidates:
             if self.is_legal(candidate) and candidate not in self.walls:
                 neighbors.append(candidate)
         return neighbors
 
-    def generate_coordinates(self):
+    def generate_passages(self):
         #start from (1,1)
         self.walls.remove((1, 1))
         self.add_frontiers((1, 1))
@@ -69,7 +69,7 @@ class Maze:
             i += 1
 
     def generate(self):
-        self.generate_coordinates()
+        self.generate_passages()
         for i in range(self.height):
             for j in range(self.width):
                 if (i, j) in self.walls:
@@ -80,20 +80,21 @@ class Maze:
         self.maze[-2][-2] = Tile(TileTypes.GOAL, (self.height-2, self.height-2))
     
     def populate(self):
-        self.empty.remove((1,1))
+        self.empty.remove((Default.POS_I.value, Default.POS_J.value))
         self.empty.remove((self.width-2, self.height-2))
         for i in range(self.num_characters):
-            rand_coord = self.empty[randint(0, len(self.empty) - 1)]
+            rand_pos = self.empty[randint(0, len(self.empty) - 1)]
             character = Character("enemy", Default.HEALTH.value, Default.STRENGTH.value)
-            self.maze[rand_coord[0]][rand_coord[1]].update_tile(character, TileTypes.CHARACTER)
-            self.empty.remove(rand_coord)
+            self.maze[rand_pos[0]][rand_pos[1]].update_tile(character, TileTypes.CHARACTER)
+            self.empty.remove(rand_pos)
         for i in range(self.num_items):
-            rand_coord = self.empty[randint(0, len(self.empty) - 1)]
+            rand_pos = self.empty[randint(0, len(self.empty) - 1)]
             item = Item("item", "miscellaneous")
-            self.maze[rand_coord[0]][rand_coord[1]].update_tile(item, TileTypes.ITEM)
-            self.empty.remove(rand_coord)
-            
+            self.maze[rand_pos[0]][rand_pos[1]].update_tile(item, TileTypes.ITEM)
+            self.empty.remove(rand_pos)
+
     def print(self):
-        maze_display = [(tile.get_display() for tile in row) for row in self.maze]
+        maze_display = [[tile.get_display() for tile in row] for row in self.maze]
+        maze_display[Default.POS_I.value][Default.POS_J.value] = " P "
         for i in range(len(maze_display)):
             print("".join(maze_display[i]))

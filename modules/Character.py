@@ -1,8 +1,10 @@
+from enums.DEFAULT import Default
 class Character:
     def __init__(self, name, health, strength):
         self.name = name
         self.health = health
         self.strength = strength
+        self.pos = (Default.POS_I.value, Default.POS_J.value)
     
     def combat(self, character):
         while self.health > 0 or character.health > 0:
@@ -20,7 +22,7 @@ class Character:
                 print(character.name + " died")
                 break
             print(self.name + " has " + str(self.health) + " health left.")
-        
+
     def status(self):
         print(self.name)
         print("HEALTH: " + str(self.health))

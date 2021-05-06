@@ -5,7 +5,6 @@ class Tile:
         self.content = content
         self.displays = {
             TileTypes.WALL : "▓▓▓",
-            TileTypes.PLAYER : " P ",
             TileTypes.GOAL : " ★ ",
             TileTypes.EMPTY : "   ",
             TileTypes.CHARACTER: " C ",

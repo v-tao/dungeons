@@ -1,6 +1,6 @@
 from random import randint
-from Tile import Tile
-from Tile import Wall
+from modules.Tile import Tile
+
 class Maze:
     def __init__(self, width, height):
         self.width = width
@@ -9,11 +9,13 @@ class Maze:
         self.passage = []
         self.frontiers = []
         self.maze = []
+        self.maze_display = []
         for i in range(height):
             maze_row = []
             for j in range(width):
-                maze_row.append("X")
+                maze_row.append(Tile("wall"))
                 self.blocked.append((i, j))
+            self.maze_display.append(maze_row)
             self.maze.append(maze_row)
     
     def is_legal(self, coordinate):
@@ -40,13 +42,10 @@ class Maze:
         return neighbors
 
     def generate_maze(self):
-        #starting cell
-        start_x = randint(0, self.width-1)
-        start_y = (randint(0, self.height-1))
-        self.blocked.remove((start_x, start_y))
-        self.passage.append((start_x, start_y))
-        self.maze[start_x][start_y] = " "
-        self.add_frontiers((start_x, start_y))
+        #start from (1,1)
+        self.blocked.remove((1, 1))
+        self.passage.append((1, 1))
+        self.add_frontiers((1, 1))
         i = 0
         while self.frontiers:
             #random cell from list of frontier cells
@@ -70,7 +69,9 @@ class Maze:
         for i in range(self.height):
             for j in range(self.width):
                 if (i, j) in self.blocked:
-                    self.maze[i][j] = "▓▓"
+                    self.maze[i][j] = Tile("wall")
+                    self.maze_display[i][j] = Tile("wall").display
                 else:
-                    self.maze[i][j] = "  "
+                    self.maze[i][j] = Tile("empty")
+                    self.maze_display[i][j] = Tile("empty").display
             print("".join(self.maze[i]))

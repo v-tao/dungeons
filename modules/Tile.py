@@ -1,7 +1,10 @@
 class Tile:
-    def __init__(self, category, display):
+    def __init__(self, category):
         self.category = category
-
-class Wall(Tile):
-    def __init__(self):
-        super(Wall, self).__init__("wall", "▓▓")
+        displays = {
+            "empty" : "  ",
+            "wall" : "▓▓",
+            "character" : "CC",
+            "item" : "II",
+        }
+        self.display = displays[category]

@@ -4,6 +4,12 @@ from modules.Item import Item
 from random import randint
 from enums.DEFAULT import Default
 
-name = input("What is your character's name?\n")
-player = Character(name, Default.HEALTH.value, Default.STRENGTH.value)
-player.status()
+# name = input("What is your character's name?\n")
+# #PLAYER INIT
+# player = Character(name, Default.HEALTH.value, Default.STRENGTH.value)
+# player.status()
+
+#MAZE INIT
+maze = Maze(Default.MAZE_WIDTH, Default.MAZE_HEIGHT)
+maze.generate_maze()
+maze.print()

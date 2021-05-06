@@ -20,7 +20,7 @@ class Maze:
     def is_legal(self, coordinate):
         if (coordinate[0] >= 0 and coordinate[0] < self. height
         and coordinate[1] >= 0 and coordinate[1] < self.width):
-            return coordinate
+            return True
         else:
             return False
     

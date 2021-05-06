@@ -20,3 +20,8 @@ class Character:
                 print(character.name + " died")
                 break
             print(self.name + " has " + str(self.health) + " health left.")
+        
+    def status(self):
+        print(self.name)
+        print("HEALTH: " + str(self.health))
+        print("STRENGTH: " + str(self.strength))

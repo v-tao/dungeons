@@ -1,8 +1,9 @@
 class Character:
-    def __init__(self, name, health, strength):
+    def __init__(self, name, health, strength, coordinate):
         self.name = name
         self.health = health
         self.strength = strength
+        self.coordinate = coordinate
     
     def combat(self, character):
         while self.health > 0 or character.health > 0:

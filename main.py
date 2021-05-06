@@ -11,5 +11,6 @@ from enums.DEFAULT import Default
 
 #MAZE INIT
 maze = Maze(Default.MAZE_WIDTH, Default.MAZE_HEIGHT)
-maze.generate_maze()
+maze.generate()
+maze.populate()
 maze.print()

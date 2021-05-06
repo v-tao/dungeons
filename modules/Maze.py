@@ -4,6 +4,7 @@ from modules.Item import Item
 from modules.Character import Character
 from enums.DEFAULT import Default
 from enums.TILE_TYPES import TileTypes
+from enums.MOVES import Moves
 
 class Maze:
     def __init__(self, width, height, num_characters=Default.NUM_CHARACTERS.value, num_items=Default.NUM_ITEMS.value):
@@ -98,3 +99,16 @@ class Maze:
         maze_display[Default.POS_I.value][Default.POS_J.value] = " P "
         for i in range(len(maze_display)):
             print("".join(maze_display[i]))
+    
+    def legal_moves(self, pos):
+        directions = {
+            (pos[0] - 1, pos[1]) : Moves.NORTH,
+            (pos[0], pos[1] + 1) : Moves.EAST,
+            (pos[0] + 1, pos[1]) : Moves.SOUTH,
+            (pos[0], pos[1] - 1) : Moves.WEST,
+        }
+        moves = []
+        for direction in directions:
+            if self.is_legal(direction) and direction not in self.walls:
+                moves.append(directions[direction])
+        return moves

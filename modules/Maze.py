@@ -1,5 +1,6 @@
 from random import randint
 from modules.Tile import Tile
+from enums.TILE_TYPES import TileTypes
 
 class Maze:
     def __init__(self, width, height):
@@ -9,13 +10,11 @@ class Maze:
         self.passage = []
         self.frontiers = []
         self.maze = []
-        self.maze_display = []
         for i in range(height):
             maze_row = []
             for j in range(width):
-                maze_row.append(Tile("wall"))
+                maze_row.append(Tile(TileTypes.WALL, (i, j)))
                 self.blocked.append((i, j))
-            self.maze_display.append(maze_row)
             self.maze.append(maze_row)
     
     def is_legal(self, coordinate):
@@ -41,7 +40,7 @@ class Maze:
                 neighbors.append(candidate)
         return neighbors
 
-    def generate_maze(self):
+    def generate_coordinates(self):
         #start from (1,1)
         self.blocked.remove((1, 1))
         self.passage.append((1, 1))
@@ -65,13 +64,17 @@ class Maze:
             self.frontiers.remove(cell)
             i += 1
     
-    def print(self):
+    def generate_maze(self):
+        self.generate_coordinates()
         for i in range(self.height):
             for j in range(self.width):
                 if (i, j) in self.blocked:
-                    self.maze[i][j] = Tile("wall")
-                    self.maze_display[i][j] = Tile("wall").display
+                    self.maze[i][j] = Tile(TileTypes.WALL, (i, j))
                 else:
-                    self.maze[i][j] = Tile("empty")
-                    self.maze_display[i][j] = Tile("empty").display
-            print("".join(self.maze[i]))
+                    self.maze[i][j] = Tile(TileTypes.EMPTY, (i, j))
+        self.maze[-2][-2] = Tile(TileTypes.GOAL, (i, j))
+    
+    def print(self):
+        maze_display = [(tile.get_display() for tile in row) for row in self.maze]
+        for i in range(len(maze_display)):
+            print("".join(maze_display[i]))

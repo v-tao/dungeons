@@ -1,4 +1,6 @@
 from random import randint
+from Tile import Tile
+from Tile import Wall
 class Maze:
     def __init__(self, width, height):
         self.width = width

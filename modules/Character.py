@@ -6,22 +6,19 @@ class Character:
         self.strength = strength
         self.pos = (Default.POS_I.value, Default.POS_J.value)
     
+    #returns True if win
     def combat(self, character):
         while self.health > 0 or character.health > 0:
-            print(self.name + " attacks for " + str(self.strength) + " damage!")
             character.health -= self.strength
             if character.health <= 0:
                 character.health = 0
                 print(character.name + " died")
-                break
-            print(character.name + " has " + str(character.health) + " health left.")
-            print(character.name + " attacks for " + str(character.strength) + " damage!")
+                return True
             self.health -= character.strength
             if self.health <= 0:
                 self.health = 0
                 print(character.name + " died")
-                break
-            print(self.name + " has " + str(self.health) + " health left.")
+                return False
 
     def status(self):
         print(self.name)

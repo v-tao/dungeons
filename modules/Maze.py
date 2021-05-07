@@ -50,7 +50,6 @@ class Maze:
         #start from (1,1)
         self.walls.remove((1, 1))
         self.add_frontiers((1, 1))
-        i = 0
         while self.frontiers:
             #random cell from list of frontier cells
             cell = self.frontiers[randint(0, len(self.frontiers)-1)]
@@ -67,7 +66,6 @@ class Maze:
             self.add_frontiers(cell)
             #remove the chosen frontier cell from the list of frontier cells
             self.frontiers.remove(cell)
-            i += 1
 
     def generate(self):
         self.generate_passages()

@@ -21,11 +21,16 @@ class Character:
                 print(character.name + " died")
                 return False
 
-    def status(self):
-        print(self.name)
+    def print_status(self):
+        print("\n" + self.name)
         print("HEALTH: " + str(self.health))
-        print("STRENGTH: " + str(self.strength))
+        print("STRENGTH: " + str(self.strength) + "\n")
     
-    def show_inventory(self):
-        for item in self.inventory:
-            print(item.name)
+    def print_inventory(self):
+        print("\n===== INVENTORY =====")
+        if not self.inventory:
+            print("You have no items in your inventory\n")
+        else: 
+            for item in self.inventory:
+                print(item.name)
+            print(" ")

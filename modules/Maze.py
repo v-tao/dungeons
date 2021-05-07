@@ -4,7 +4,7 @@ from modules.Item import Item
 from modules.Character import Character
 from enums.DEFAULT import Default
 from enums.TILE_TYPES import TileTypes
-from enums.MOVES import Moves
+from enums.ACTIONS import Actions
 
 class Maze:
     def __init__(self, width, height, num_characters=Default.NUM_CHARACTERS.value, num_items=Default.NUM_ITEMS.value):
@@ -98,18 +98,18 @@ class Maze:
         for i in range(len(maze_display)):
             print("".join(maze_display[i]))
     
-    def legal_moves(self, pos):
+    def legal_actions(self, pos):
         directions = {
-            (pos[0] - 1, pos[1]) : Moves.NORTH,
-            (pos[0], pos[1] + 1) : Moves.EAST,
-            (pos[0] + 1, pos[1]) : Moves.SOUTH,
-            (pos[0], pos[1] - 1) : Moves.WEST,
+            (pos[0] - 1, pos[1]) : Actions.MOVE_NORTH,
+            (pos[0], pos[1] + 1) : Actions.MOVE_EAST,
+            (pos[0] + 1, pos[1]) : Actions.MOVE_SOUTH,
+            (pos[0], pos[1] - 1) : Actions.MOVE_WEST,
         }
-        moves = []
+        actions = [Actions.CHECK_STATUS, Actions.CHECK_INVENTORY]
         for direction in directions:
             if self.is_legal(direction) and direction not in self.walls:
-                moves.append(directions[direction])
-        return moves
+                actions.append(directions[direction])
+        return actions
     
     def get_tile(self, pos):
         return self.maze[pos[0]][pos[1]]
@@ -125,28 +125,28 @@ class Maze:
 
     def new_position(self, pos, move):
         new_pos = pos
-        if move == Moves.EAST.value:
+        if move == Actions.MOVE_EAST.value:
             new_pos = (new_pos[0], new_pos[1] + 1)
             while ((new_pos[0], new_pos[1] + 1) not in self.walls 
             and (new_pos[0] + 1, new_pos[1]) in self.walls
             and (new_pos[0] - 1, new_pos[1]) in self.walls
             and self.maze[new_pos[0]][new_pos[1]].category == TileTypes.EMPTY):
                 new_pos = (new_pos[0], new_pos[1] + 1)
-        elif move == Moves.WEST.value:
+        elif move == Actions.MOVE_WEST.value:
             new_pos = (new_pos[0], new_pos[1] - 1)
             while ((new_pos[0], new_pos[1] - 1) not in self.walls 
             and (new_pos[0] + 1, new_pos[1]) in self.walls
             and (new_pos[0] - 1, new_pos[1]) in self.walls
             and self.maze[new_pos[0]][new_pos[1]].category == TileTypes.EMPTY):
                 new_pos = (new_pos[0], new_pos[1] - 1)
-        elif move == Moves.NORTH.value:
+        elif move == Actions.MOVE_NORTH.value:
             new_pos = (new_pos[0] - 1, new_pos[1])
             while ((new_pos[0] - 1, new_pos[1]) not in self.walls 
             and (new_pos[0], new_pos[1] + 1) in self.walls
             and (new_pos[0], new_pos[1] - 1) in self.walls
             and self.maze[new_pos[0]][new_pos[1]].category == TileTypes.EMPTY):
                 new_pos = (new_pos[0] - 1, new_pos[1])
-        elif move == Moves.SOUTH.value:
+        elif move == Actions.MOVE_SOUTH.value:
             new_pos = (new_pos[0] + 1, new_pos[1])
             while ((new_pos[0] + 1, new_pos[1]) not in self.walls 
             and (new_pos[0], new_pos[1] + 1) in self.walls

@@ -119,24 +119,28 @@ class Maze:
             new_pos = (new_pos[0], new_pos[1] + 1)
             while ((new_pos[0], new_pos[1] + 1) not in self.walls 
             and (new_pos[0] + 1, new_pos[1]) in self.walls
-            and (new_pos[0] - 1, new_pos[1]) in self.walls):
+            and (new_pos[0] - 1, new_pos[1]) in self.walls
+            and self.maze[new_pos[0]][new_pos[1]].category == TileTypes.EMPTY):
                 new_pos = (new_pos[0], new_pos[1] + 1)
         elif move == Moves.WEST.value:
             new_pos = (new_pos[0], new_pos[1] - 1)
             while ((new_pos[0], new_pos[1] - 1) not in self.walls 
             and (new_pos[0] + 1, new_pos[1]) in self.walls
-            and (new_pos[0] - 1, new_pos[1]) in self.walls):
+            and (new_pos[0] - 1, new_pos[1]) in self.walls
+            and self.maze[new_pos[0]][new_pos[1]].category == TileTypes.EMPTY):
                 new_pos = (new_pos[0], new_pos[1] - 1)
         elif move == Moves.NORTH.value:
             new_pos = (new_pos[0] - 1, new_pos[1])
             while ((new_pos[0] - 1, new_pos[1]) not in self.walls 
             and (new_pos[0], new_pos[1] + 1) in self.walls
-            and (new_pos[0], new_pos[1] - 1) in self.walls):
+            and (new_pos[0], new_pos[1] - 1) in self.walls
+            and self.maze[new_pos[0]][new_pos[1]].category == TileTypes.EMPTY):
                 new_pos = (new_pos[0] - 1, new_pos[1])
         elif move == Moves.SOUTH.value:
             new_pos = (new_pos[0] + 1, new_pos[1])
             while ((new_pos[0] + 1, new_pos[1]) not in self.walls 
             and (new_pos[0], new_pos[1] + 1) in self.walls
-            and (new_pos[0], new_pos[1] - 1) in self.walls):
+            and (new_pos[0], new_pos[1] - 1) in self.walls
+            and self.maze[new_pos[0]][new_pos[1]].category == TileTypes.EMPTY):
                 new_pos = (new_pos[0] + 1, new_pos[1])
         return new_pos

@@ -4,7 +4,7 @@ class Default(IntEnum):
     STRENGTH = 5
     MAZE_WIDTH = 9
     MAZE_HEIGHT = 9
-    NUM_CHARACTERS = 3
+    NUM_CHARACTERS = 0
     NUM_ITEMS = 3
     POS_I = 1
     POS_J = 1

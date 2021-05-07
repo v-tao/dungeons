@@ -29,6 +29,11 @@ while player.pos != (maze.height-2, maze.width-2) and not player.health <= 0:
         combat_won = player.combat(maze.get_tile(player.pos).content)
         if combat_won:
             maze.set_tile(player.pos, Tile(TileTypes.EMPTY))
+    if maze.check_item(player.pos):
+        item = maze.get_tile(player.pos).content
+        player.inventory.append(item)
+        print("You have picked up the " + item.name)
+        maze.set_tile(player.pos, Tile(TileTypes.EMPTY))
 if player.pos == (maze.height-2, maze.width-2):
     print("You beat the maze!")
 elif player.health <= 0:

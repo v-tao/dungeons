@@ -5,6 +5,7 @@ class Character:
         self.health = health
         self.strength = strength
         self.pos = (Default.POS_I.value, Default.POS_J.value)
+        self.inventory = []
     
     #returns True if win
     def combat(self, character):
@@ -24,3 +25,7 @@ class Character:
         print(self.name)
         print("HEALTH: " + str(self.health))
         print("STRENGTH: " + str(self.strength))
+    
+    def show_inventory(self):
+        for item in self.inventory:
+            print(item.name)

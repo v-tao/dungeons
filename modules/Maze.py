@@ -116,9 +116,12 @@ class Maze:
 
     def set_tile(self, pos, tile):
         self.maze[pos[0]][pos[1]] = tile
-        
+
     def check_combat(self, pos):
         return True if self.get_tile(pos).category == TileTypes.CHARACTER else False
+
+    def check_item(self, pos):
+        return True if self.get_tile(pos).category == TileTypes.ITEM else False
 
     def new_position(self, pos, move):
         new_pos = pos

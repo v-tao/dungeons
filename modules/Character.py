@@ -31,6 +31,6 @@ class Character:
         if not self.inventory:
             print("You have no items in your inventory\n")
         else: 
-            for item in self.inventory:
-                print(item.name)
+            for i, item in enumerate(self.inventory):
+                print(str(i + 1) + " - " + item.name)
             print(" ")

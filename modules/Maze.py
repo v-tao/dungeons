@@ -100,7 +100,8 @@ class Maze:
         maze_display[player_pos[0]][player_pos[1]] = " P "
         for i in range(len(maze_display)):
             print("".join(maze_display[i]))
-    
+        print("")
+
     def legal_actions(self, pos):
         directions = {
             (pos[0] - 1, pos[1]) : Actions.MOVE_NORTH,

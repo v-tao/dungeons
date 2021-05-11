@@ -109,7 +109,7 @@ class Maze:
             (pos[0] + 1, pos[1]) : Actions.MOVE_SOUTH,
             (pos[0], pos[1] - 1) : Actions.MOVE_WEST,
         }
-        actions = [Actions.CHECK_STATUS, Actions.CHECK_INVENTORY]
+        actions = [Actions.DISPLAY_MAZE, Actions.CHECK_STATUS, Actions.CHECK_INVENTORY]
         for direction in directions:
             if self.is_legal(direction) and direction not in self.walls:
                 actions.append(directions[direction])

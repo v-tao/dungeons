@@ -10,13 +10,19 @@ class Weapon(Item):
     def __init__(self, name, attack, description):
         super(Weapon, self).__init__(name, ItemTypes.WEAPON, description)
         self.attack = attack
+    #insert use for weapon
 
 class Armor(Item):
     def __init__(self, name, armor, description):
         super(Armor, self).__init__(name, ItemTypes.ARMOR, description)
         self.armor = armor
+    #insert use for armor
 
 class Potion(Item):
     def __init__(self, name, health, description):
         super(Potion, self).__init__(name, ItemTypes.POTION, description)
         self.health = health
+    
+    def use(self, character):
+        character.health += self.health
+        print("You have healed for " + str(self.health) + ".")

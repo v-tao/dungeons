@@ -55,8 +55,7 @@ while player.pos != (maze.height-2, maze.width-2) and not player.health <= 0:
                 while choice not in [str(i) for i in range(3)]:
                     choice = input("Please enter a valid input\n")
                 if int(choice) == Actions.USE_ITEM:
-                    print("insert code to use item")
-                    #insert code to use item
+                    player.inventory[int(item)-1].use(player)
                 elif int(choice) == Actions.DISCARD_ITEM:
                     print(player.inventory[int(item)-1].name + " has been discarded.\n")
                     player.inventory.pop(int(item)-1)

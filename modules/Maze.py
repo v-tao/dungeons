@@ -5,17 +5,22 @@ from modules.Character import Character
 from enums.DEFAULT import Default
 from enums.TILE_TYPES import TileTypes
 from enums.ACTIONS import Actions
+from enums.ITEM_TYPES import ItemTypes
+from constants.ITEMS import Items
+
+characters = []
+items=[]
 
 class Maze:
-    def __init__(self, width, height, num_characters=Default.NUM_CHARACTERS.value, num_items=Default.NUM_ITEMS.value):
+    def __init__(self, width, height, characters=characters, items=items):
         self.width = width
         self.height = height
-        self.num_characters = num_characters
-        self.num_items = num_items
         self.walls = []
         self.empty = []
         self.frontiers = []
         self.maze = []
+        self.items = items
+        self.characters = characters
         for i in range(height):
             maze_row = []
             for j in range(width):
@@ -81,14 +86,12 @@ class Maze:
     def populate(self):
         self.empty.remove((Default.POS_I.value, Default.POS_J.value))
         self.empty.remove((self.width-2, self.height-2))
-        for i in range(self.num_characters):
+        for character in self.characters:
             rand_pos = self.empty[randint(0, len(self.empty) - 1)]
-            character = Character("enemy", Default.HEALTH.value, Default.STRENGTH.value)
             self.maze[rand_pos[0]][rand_pos[1]].update_tile(character, TileTypes.CHARACTER)
             self.empty.remove(rand_pos)
-        for i in range(self.num_items):
+        for item in self.items:
             rand_pos = self.empty[randint(0, len(self.empty) - 1)]
-            item = Item("item", "miscellaneous")
             self.maze[rand_pos[0]][rand_pos[1]].update_tile(item, TileTypes.ITEM)
             self.empty.remove(rand_pos)
 

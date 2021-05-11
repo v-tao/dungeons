@@ -6,12 +6,15 @@ from random import randint
 from enums.DEFAULT import Default
 from enums.TILE_TYPES import TileTypes
 from enums.ACTIONS import Actions
+from constants.ITEMS import Items
 # name = input("What is your character's name?\n")
 # #PLAYER INIT
 player = Character("name", Default.HEALTH.value, Default.STRENGTH.value)
 
+items = [Items.SMALL_HEALTH_POTION, Items.MEDIUM_HEALTH_POTION, Items.LARGE_HEALTH_POTION]
+
 #MAZE INIT
-maze = Maze(Default.MAZE_WIDTH, Default.MAZE_HEIGHT)
+maze = Maze(Default.MAZE_WIDTH, Default.MAZE_HEIGHT, characters=[], items=items)
 maze.generate()
 maze.populate()
 

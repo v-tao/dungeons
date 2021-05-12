@@ -2,24 +2,27 @@ from enums.DEFAULT import Default
 from constants.ITEMS import Items
 
 class Character:
-    def __init__(self, name, health):
+    def __init__(self, name, health, strength=Default.STRENGTH, defense=Default.DEFENSE, 
+        weapon=Items.NONE_WEAPON, armor=Items.NONE_ARMOR):
         self.name = name
         self.health = health
         self.pos = (Default.POS_I.value, Default.POS_J.value)
         self.inventory = []
-        self.weapon = Items.KNIFE
-        self.armor = Items.LEATHER_ARMOR
+        self.strength = strength
+        self.defense = defense
+        self.weapon = weapon
+        self.armor = armor
     
     #returns True if win
     def combat(self, character):
         while self.health > 0 or character.health > 0:
             #each attack is the strength of the character + strength of the weapon
-            character.health -= (self.weapon.attack - character.armor.defense)
+            character.health -= (self.strength + self.weapon.attack - character.armor.defense - character.defense)
             if character.health <= 0:
                 character.health = 0
                 print(character.name + " died")
                 return True
-            self.health -= (character.weapon.attack - self.armor.defense)
+            self.health -= (character.strength + character.weapon.attack - self.armor.defense - self.defense)
             if self.health <= 0:
                 self.health = 0
                 print(character.name + " died")

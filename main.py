@@ -7,9 +7,10 @@ from enums.DEFAULT import Default
 from enums.TILE_TYPES import TileTypes
 from enums.ACTIONS import Actions
 from constants.ITEMS import Items
-# name = input("What is your character's name?\n")
-# #PLAYER INIT
-player = Character("name", Default.HEALTH.value)
+
+# PLAYER INIT
+name = input("What is your character's name?\n")
+player = Character(name, Default.HEALTH.value, weapon=Items.KNIFE, armor=Items.LEATHER_ARMOR)
 
 items = [Items.SMALL_HEALTH_POTION, Items.MEDIUM_HEALTH_POTION, Items.LARGE_HEALTH_POTION,
         Items.KNIFE, Items.SWORD, Items.ALBERT_QI,

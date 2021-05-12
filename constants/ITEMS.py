@@ -1,11 +1,16 @@
 from modules.Item import Item, Weapon, Armor, Potion
-class Items
+class Items:
     ##### POTIONS #####
     SMALL_HEALTH_POTION = Potion("SMALL HEALTH POTION", 10, "Restores 10 HP.")
     MEDIUM_HEALTH_POTION = Potion("MEDIUM HEALTH POTION", 25, "Restores 25 HP.")
     LARGE_HEALTH_POTION = Potion("LARGE HEALTH POTION", 75, "Restores 75 HP.")
     
     ##### WEAPONS #####
-    KNIFE = Weapon("KNIFE", 5, "A small attack knife. Deals 5 attack.")
-    SWORD = Weapon("SWORD", 12, "A trustworthy sword. Deals 12 attack.")
-    ALBERT_QI = Weapon("ALBERT QI", 100, "That's a lot of damage. Deals 100 attack.")
+    KNIFE = Weapon("KNIFE", 5, "5 attack. A small attack knife.")
+    SWORD = Weapon("SWORD", 12, "12 attack. A trustworthy sword.")
+    ALBERT_QI = Weapon("ALBERT QI", 100, "100 attack. That's a lot of damage.")
+
+    ##### ARMOR #####
+    LEATHER_ARMOR = Armor("LEATHER ARMOR", 5, "5 Defense. Flimsy armor.")
+    CHAINMAIL_ARMOR = Armor("CHAINMAIL ARMOR", 12, "12 Defense. Armor made from chains.")
+    ALBERT_QI = Armor("ALBERT QI", 100, "100 Defense. Will guard you from all harm")

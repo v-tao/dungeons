@@ -1,11 +1,14 @@
 from enums.DEFAULT import Default
+from constants.ITEMS import Items
+
 class Character:
     def __init__(self, name, health):
         self.name = name
         self.health = health
-        self.strength = strength
         self.pos = (Default.POS_I.value, Default.POS_J.value)
         self.inventory = []
+        self.weapon = Items.KNIFE
+        self.armor = Items.LEATHER_ARMOR
     
     #returns True if win
     def combat(self, character):
@@ -26,12 +29,14 @@ class Character:
         if self.weapon:
             self.inventory.append(self.weapon)
         self.weapon = weapon
-        print(weapon.name + " has been equipped.")
+        self.inventory.remove(weapon)
+        print(weapon.name + " has been equipped.\n")
     
     def equip_armor(self, armor):
         if self.armor:
             self.inventory.append(self.armor)
         self.armor = armor
+        self.inventory.remove(armor)
         print(armor.name + " has been equipped")
 
     def print_status(self):

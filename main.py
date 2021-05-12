@@ -9,9 +9,11 @@ from enums.ACTIONS import Actions
 from constants.ITEMS import Items
 # name = input("What is your character's name?\n")
 # #PLAYER INIT
-player = Character("name", Default.HEALTH.value, Default.STRENGTH.value)
+player = Character("name", Default.HEALTH.value)
 
-items = [Items.SMALL_HEALTH_POTION, Items.MEDIUM_HEALTH_POTION, Items.LARGE_HEALTH_POTION]
+items = [Items.SMALL_HEALTH_POTION, Items.MEDIUM_HEALTH_POTION, Items.LARGE_HEALTH_POTION,
+        Items.KNIFE, Items.SWORD, Items.ALBERT_QI,
+        Items.LEATHER_ARMOR, Items.CHAINMAIL_ARMOR, Items.ALBERT_QI]
 
 #MAZE INIT
 maze = Maze(Default.MAZE_WIDTH, Default.MAZE_HEIGHT, characters=[], items=items)

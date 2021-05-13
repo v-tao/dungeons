@@ -2,10 +2,11 @@ from enums.DEFAULT import Default
 from constants.ITEMS import Items
 
 class Character:
-    def __init__(self, name, health, strength=Default.STRENGTH, defense=Default.DEFENSE, 
+    def __init__(self, name, max_health, strength=Default.STRENGTH, defense=Default.DEFENSE, 
         weapon=Items.NONE_WEAPON, armor=Items.NONE_ARMOR):
         self.name = name
-        self.health = health
+        self.max_health = max_health
+        self.health = max_health
         self.pos = (Default.POS_I.value, Default.POS_J.value)
         self.inventory = []
         self.strength = strength
@@ -15,6 +16,7 @@ class Character:
     
     #returns True if win
     def combat(self, character):
+        print("You encountered " + character.name + ".")
         while self.health > 0 and character.health > 0:
             damage_dealt = self.strength + self.weapon.attack - character.armor.defense - character.defense
             damage_received = character.strength + character.weapon.attack - self.armor.defense - self.defense

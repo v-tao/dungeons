@@ -28,5 +28,6 @@ class Potion(Item):
         self.health = health
     
     def use(self, character):
-        character.health += self.health
-        print("You have healed for " + str(self.health) + ".")
+        character.health = character.max_health if character.health + self.health > character.max_health else character.health + self.health
+        character.inventory.remove(self)
+        print("You have healed to " + str(character.health) + " HP.\n")

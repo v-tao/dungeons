@@ -12,12 +12,13 @@ from constants.ENEMIES import Enemies
 name = input("What is your character's name?\n")
 player = Character(name, Default.HEALTH.value, weapon=Items.KNIFE, armor=Items.LEATHER_ARMOR)
 
-items = [Items.SMALL_HEALTH_POTION, Items.MEDIUM_HEALTH_POTION, Items.LARGE_HEALTH_POTION,
-        Items.KNIFE, Items.SWORD, Items.ALBERT_QI,
-        Items.LEATHER_ARMOR, Items.CHAINMAIL_ARMOR, Items.ALBERT_QI]
+# items = [Items.SMALL_HEALTH_POTION, Items.MEDIUM_HEALTH_POTION, Items.LARGE_HEALTH_POTION,
+#         Items.KNIFE, Items.SWORD, Items.ALBERT_QI,
+#         Items.LEATHER_ARMOR, Items.CHAINMAIL_ARMOR, Items.ALBERT_QI]
+items = []
 
-enemies = [Enemies.IMP, Enemies.TROLL, Enemies.DRAGON]
-# enemies = [Enemies.DRAGON]
+# enemies = [Enemies.IMP, Enemies.TROLL, Enemies.DRAGON]
+enemies = []
 
 #MAZE INIT
 maze = Maze(Default.MAZE_WIDTH, Default.MAZE_HEIGHT, enemies=enemies, items=items)
@@ -26,6 +27,8 @@ maze.populate()
 
 player.print_status()
 maze.print(player.pos)
+
+level = 0
 
 def combat():
     combat_won = player.combat(maze.get_tile(player.pos).content)
@@ -56,26 +59,34 @@ def check_inventory():
             elif int(choice) == Actions.DISCARD_ITEM:
                 print(player.inventory[int(item)-1].name + " has been discarded.\n")
                 player.inventory.pop(int(item)-1)
-
-while player.pos != (maze.height-2, maze.width-2) and not player.health <= 0:
-    print("What action will you take?")
-    for action in Actions:
-        print(str(action.value) + " - " + str(action.name).replace("_", " "))
-    choice = input()
-    while choice not in [str(move.value) for move in maze.legal_actions(player.pos)]:
-        choice = input("Please pick a legal move\n")
-    if int(choice) == Actions.CHECK_STATUS.value:
+while not player.health <= 0:
+    level += 1
+    while player.pos != (maze.height-2, maze.width-2) and not player.health <= 0:
+        print("What action will you take?")
+        for action in Actions:
+            print(str(action.value) + " - " + str(action.name).replace("_", " "))
+        choice = input()
+        while choice not in [str(move.value) for move in maze.legal_actions(player.pos)]:
+            choice = input("Please pick a legal move\n")
+        if int(choice) == Actions.CHECK_STATUS.value:
+            player.print_status()
+        elif int(choice) == Actions.CHECK_INVENTORY.value:
+            check_inventory()
+        elif int(choice) == Actions.DISPLAY_MAZE:
+            maze.print(player.pos)
+        else:
+            player.pos = maze.new_position(player.pos, int(choice))
+            if maze.check_combat(player.pos):
+                combat()
+            if maze.check_item(player.pos):
+                pick_up_item()
+            maze.print(player.pos)
+    if player.pos == (maze.height-2, maze.width-2):
+        print("You have completed level " + str(level) + ".")
+        maze = Maze(maze.width + 2, maze.height + 2, enemies=enemies, items=items)
+        maze.generate()
+        maze.populate()
+        player.pos = (1,1)
         player.print_status()
-    elif int(choice) == Actions.CHECK_INVENTORY.value:
-        check_inventory()
-    elif int(choice) == Actions.DISPLAY_MAZE:
         maze.print(player.pos)
-    else:
-        player.pos = maze.new_position(player.pos, int(choice))
-        if maze.check_combat(player.pos):
-            combat()
-        if maze.check_item(player.pos):
-            pick_up_item()
-        maze.print(player.pos)
-if player.pos == (maze.height-2, maze.width-2):
-    print("You beat the maze!")
+print("You died. You reached level " + str(level) + ".")

@@ -53,7 +53,7 @@ class Character:
     def print_inventory(self):
         print("\n===== INVENTORY =====")
         if not self.inventory:
-            print("You have no items in your inventory\n")
+            print("Your inventory is empty.\n")
         else: 
             for i, item in enumerate(self.inventory):
                 print(str(i + 1) + " - " + item.name)

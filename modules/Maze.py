@@ -7,12 +7,8 @@ from enums.TILE_TYPES import TileTypes
 from enums.ACTIONS import Actions
 from enums.ITEM_TYPES import ItemTypes
 from constants.ITEMS import Items
-
-characters = []
-items=[]
-
 class Maze:
-    def __init__(self, width, height, characters=characters, items=items):
+    def __init__(self, width, height, enemies=[], items=[]):
         self.width = width
         self.height = height
         self.walls = []
@@ -20,7 +16,7 @@ class Maze:
         self.frontiers = []
         self.maze = []
         self.items = items
-        self.characters = characters
+        self.enemies = enemies
         for i in range(height):
             maze_row = []
             for j in range(width):
@@ -86,7 +82,7 @@ class Maze:
     def populate(self):
         self.empty.remove((Default.POS_I.value, Default.POS_J.value))
         self.empty.remove((self.width-2, self.height-2))
-        for character in self.characters:
+        for character in self.enemies:
             rand_pos = self.empty[randint(0, len(self.empty) - 1)]
             self.maze[rand_pos[0]][rand_pos[1]].update_tile(character, TileTypes.CHARACTER)
             self.empty.remove(rand_pos)

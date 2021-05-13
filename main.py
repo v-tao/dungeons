@@ -2,11 +2,11 @@ from modules.Character import Character
 from modules.Maze import Maze
 from modules.Item import Item
 from modules.Tile import Tile
-from random import randint
 from enums.DEFAULT import Default
 from enums.TILE_TYPES import TileTypes
 from enums.ACTIONS import Actions
 from constants.ITEMS import Items
+from constants.ENEMIES import Enemies
 
 # PLAYER INIT
 name = input("What is your character's name?\n")
@@ -16,8 +16,11 @@ items = [Items.SMALL_HEALTH_POTION, Items.MEDIUM_HEALTH_POTION, Items.LARGE_HEAL
         Items.KNIFE, Items.SWORD, Items.ALBERT_QI,
         Items.LEATHER_ARMOR, Items.CHAINMAIL_ARMOR, Items.ALBERT_QI]
 
+enemies = [Enemies.IMP, Enemies.TROLL, Enemies.DRAGON]
+# enemies = [Enemies.DRAGON]
+
 #MAZE INIT
-maze = Maze(Default.MAZE_WIDTH, Default.MAZE_HEIGHT, characters=[], items=items)
+maze = Maze(Default.MAZE_WIDTH, Default.MAZE_HEIGHT, enemies=enemies, items=items)
 maze.generate()
 maze.populate()
 
@@ -73,5 +76,3 @@ while player.pos != (maze.height-2, maze.width-2) and not player.health <= 0:
         maze.print(player.pos)
 if player.pos == (maze.height-2, maze.width-2):
     print("You beat the maze!")
-elif player.health <= 0:
-    print("You died")

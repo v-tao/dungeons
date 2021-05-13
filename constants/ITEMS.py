@@ -7,7 +7,7 @@ class Items:
     
     ##### WEAPONS #####
     NONE_WEAPON = Weapon("None", 0, "None.")
-    KNIFE = Weapon("KNIFE", 5, "5 attack. A small attack knife.")
+    KNIFE = Weapon("KNIFE", 5, "2 attack. A small attack knife.")
     SWORD = Weapon("SWORD", 12, "12 attack. A trustworthy sword.")
     ALBERT_QI = Weapon("ALBERT QI", 100, "100 attack. That's a lot of damage.")
 

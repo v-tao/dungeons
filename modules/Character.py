@@ -15,17 +15,17 @@ class Character:
     
     #returns True if win
     def combat(self, character):
-        while self.health > 0 or character.health > 0:
-            #each attack is the strength of the character + strength of the weapon
-            character.health -= (self.strength + self.weapon.attack - character.armor.defense - character.defense)
+        while self.health > 0 and character.health > 0:
+            damage_dealt = self.strength + self.weapon.attack - character.armor.defense - character.defense
+            damage_received = character.strength + character.weapon.attack - self.armor.defense - self.defense
+            character.health -= damage_dealt if damage_dealt > 0 else 0
             if character.health <= 0:
-                character.health = 0
                 print(character.name + " died")
+                print("You have " + str(self.health) + " HP remaining.")
                 return True
-            self.health -= (character.strength + character.weapon.attack - self.armor.defense - self.defense)
+            self.health -= damage_received if damage_received > 0 else 0
             if self.health <= 0:
-                self.health = 0
-                print(character.name + " died")
+                print("You died.")
                 return False
     
     def equip_weapon(self, weapon):

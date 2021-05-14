@@ -1,4 +1,4 @@
-from modules.Item import Item, Weapon, Armor, Potion
+from modules.Item import Weapon, Armor, Potion
 class Items:
     ##### POTIONS #####
     SMALL_HEALTH_POTION = Potion("SMALL HEALTH POTION", 10, "Restores 10 HP.")

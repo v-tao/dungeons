@@ -15,8 +15,8 @@ player = Character(name, Default.HEALTH.value, weapon=Items.KNIFE, armor=Items.L
 items = [Items.SMALL_HEALTH_POTION, Items.MEDIUM_HEALTH_POTION, Items.LARGE_HEALTH_POTION,
         Items.KNIFE, Items.SWORD, Items.ALBERT_QI,
         Items.LEATHER_ARMOR, Items.CHAINMAIL_ARMOR, Items.ALBERT_QI]
-
-enemies = [Enemies.IMP, Enemies.TROLL, Enemies.DRAGON]
+        
+enemies = [Enemies.IMP, Enemies.TROLL]
 
 level = 0
 

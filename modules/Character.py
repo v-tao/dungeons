@@ -4,14 +4,14 @@ from math import floor,log
 from random import choice
 
 class Character:
-    def __init__(self, name, max_health, level=Default.LEVEL, strength=Default.STRENGTH, defense=Default.DEFENSE, 
+    def __init__(self, name, max_health, level=Default.LEVEL.value, strength=Default.STRENGTH.value, defense=Default.DEFENSE.value, 
         weapon=Items.NONE_WEAPON, armor=Items.NONE_ARMOR):
         self.name = name
         self.max_health = max_health
         self.health = max_health
         self.level = level
-        self.xp = 0
         self.level_up_xp = floor(10 * log(self.level + 1))
+        self.xp = 0
         self.pos = (Default.POS_I.value, Default.POS_J.value)
         self.inventory = []
         self.strength = strength
@@ -19,20 +19,32 @@ class Character:
         self.weapon = weapon
         self.armor = armor
     
+    def check_level_up(self):
+        # xp to level up is 10ln(level + 1)
+        if self.xp >= self.level_up_xp:
+            self.level += 1
+            self.xp = self.xp - self.level_up_xp
+            self.level_up_xp = floor(10 * log(self.level + 1))
+            print("You have leveled up to level " + str(self.level) + ".")
+
     #returns True if win
-    def combat(self, character):
-        print("You encountered " + character.name + ".")
-        while self.health > 0 and character.health > 0:
-            damage_dealt = self.strength + self.weapon.attack - character.armor.defense - character.defense
-            damage_received = character.strength + character.weapon.attack - self.armor.defense - self.defense
-            character.health -= damage_dealt if damage_dealt > 0 else 0
-            if character.health <= 0:
-                print(character.name + " died")
+    def combat(self, enemy):
+        print("You encountered " + enemy.name + ".")
+        while self.health > 0 and enemy.health > 0:
+            damage_dealt = (1 + floor(0.5 * log(self.level))) * (self.strength + self.weapon.attack) - enemy.armor.defense - enemy.defense
+            damage_received = (1 + floor(0.5 * log(enemy.level))) * (enemy.strength + enemy.weapon.attack) - self.armor.defense - self.defense
+            enemy.health -= damage_dealt if damage_dealt > 0 else 0
+            if enemy.health <= 0:
+                print(enemy.name + " died")
                 print("You have " + str(self.health) + " HP remaining.")
-                # CHANGE LATER TO BE RANDOM ITEM
-                loot = choice(character.loot_table)
+                # pick up loot 
+                loot = choice(enemy.loot_table)
                 self.inventory.append(loot)
                 print("You have picked up a " + loot.name + ".")
+                # gain xp
+                self.xp += enemy.xp_reward
+                print("You have gained " + str(enemy.xp_reward) + " XP.")
+                self.check_level_up()
                 return True
             self.health -= damage_received if damage_received > 0 else 0
             if self.health <= 0:
@@ -56,6 +68,8 @@ class Character:
     def print_status(self):
         print("\n" + self.name)
         print("HEALTH: " + str(self.health))
+        print("LEVEL: " + str(self.level))
+        print("XP: " + str(self.xp) + "/" + str(self.level_up_xp))
         print("WEAPON: " + self.weapon.name + " - " + self.weapon.description)
         print("ARMOR: " + self.armor.name + " - " + self.armor.description + "\n")
     

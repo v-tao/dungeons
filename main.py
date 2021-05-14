@@ -15,7 +15,7 @@ player = Character(name, Default.HEALTH.value, weapon=Items.KNIFE, armor=Items.L
 items = [Items.SMALL_HEALTH_POTION, Items.MEDIUM_HEALTH_POTION, Items.LARGE_HEALTH_POTION,
         Items.KNIFE, Items.SWORD, Items.ALBERT_QI,
         Items.LEATHER_ARMOR, Items.CHAINMAIL_ARMOR, Items.ALBERT_QI]
-        
+
 enemies = [Enemies.IMP, Enemies.TROLL]
 
 level = 0
@@ -79,6 +79,7 @@ while not player.health <= 0:
             maze.print(player.pos)
     if player.pos == (maze.height-2, maze.width-2) and player.health > 0:
         print("You have completed level " + str(level) + ".")
+        enemies = [Enemies.IMP, Enemies.TROLL]
         maze = Maze(maze.width + 2, maze.height + 2, enemies=enemies, items=items)
         player.pos = (1,1)
         player.max_health += 25

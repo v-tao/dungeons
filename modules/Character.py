@@ -30,11 +30,12 @@ class Character:
     #returns True if win
     def combat(self, enemy):
         print("You encountered " + enemy.name + ".")
+        enemy_health = enemy.health
         while self.health > 0 and enemy.health > 0:
             damage_dealt = (1 + floor(0.5 * log(self.level))) * (self.strength + self.weapon.attack) - enemy.armor.defense - enemy.defense
             damage_received = (1 + floor(0.5 * log(enemy.level))) * (enemy.strength + enemy.weapon.attack) - self.armor.defense - self.defense
-            enemy.health -= damage_dealt if damage_dealt > 0 else 0
-            if enemy.health <= 0:
+            enemy_health -= damage_dealt if damage_dealt > 0 else 0
+            if enemy_health <= 0:
                 print(enemy.name + " died")
                 print("You have " + str(self.health) + " HP remaining.")
                 # pick up loot 

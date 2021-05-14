@@ -8,7 +8,7 @@ from enums.ACTIONS import Actions
 from constants.ITEMS import Items
 from constants.ENEMIES import Enemies
 
-# PLAYER INIT
+##### PLAYER INIT #####
 name = input("What is your character's name?\n")
 player = Character(name, Default.HEALTH.value, weapon=Items.KNIFE, armor=Items.LEATHER_ARMOR)
 
@@ -49,7 +49,7 @@ def check_inventory():
             elif int(choice) == Actions.DISCARD_ITEM:
                 print(player.inventory[int(item)-1].name + " has been discarded.\n")
                 player.inventory.pop(int(item)-1)
-# MAZE INIT
+##### MAZE INIT #####
 maze = Maze(Default.MAZE_WIDTH, Default.MAZE_HEIGHT, enemies=enemies, items=items)
 maze.generate()
 maze.populate()
@@ -78,13 +78,14 @@ while not player.health <= 0:
                 pick_up_item()
             maze.print(player.pos)
     if player.pos == (maze.height-2, maze.width-2) and player.health > 0:
+        ##### NEXT LEVEL #####
         print("You have completed level " + str(level) + ".")
         enemies = [Enemies.IMP, Enemies.TROLL]
         maze = Maze(maze.width + 2, maze.height + 2, enemies=enemies, items=items)
         player.pos = (1,1)
-        player.max_health += 25
-        player.health += 25
-        print("Your max health has been raised by 25 HP.")
+        player.max_health += Default.HEALTH_INC.value
+        player.health += Default.HEALTH_INC.value
+        print("Your max health has been raised by " + str(Default.HEALTH_INC.value) + ".")
         maze.generate()
         maze.populate()
         player.print_status()

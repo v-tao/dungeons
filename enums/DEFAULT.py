@@ -10,3 +10,4 @@ class Default(IntEnum):
     NUM_ITEMS=3
     POS_I=1
     POS_J=1
+    HEALTH_INC=10

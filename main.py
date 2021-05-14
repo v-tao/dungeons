@@ -12,21 +12,11 @@ from constants.ENEMIES import Enemies
 name = input("What is your character's name?\n")
 player = Character(name, Default.HEALTH.value, weapon=Items.KNIFE, armor=Items.LEATHER_ARMOR)
 
-# items = [Items.SMALL_HEALTH_POTION, Items.MEDIUM_HEALTH_POTION, Items.LARGE_HEALTH_POTION,
-#         Items.KNIFE, Items.SWORD, Items.ALBERT_QI,
-#         Items.LEATHER_ARMOR, Items.CHAINMAIL_ARMOR, Items.ALBERT_QI]
-items = []
+items = [Items.SMALL_HEALTH_POTION, Items.MEDIUM_HEALTH_POTION, Items.LARGE_HEALTH_POTION,
+        Items.KNIFE, Items.SWORD, Items.ALBERT_QI,
+        Items.LEATHER_ARMOR, Items.CHAINMAIL_ARMOR, Items.ALBERT_QI]
 
-# enemies = [Enemies.IMP, Enemies.TROLL, Enemies.DRAGON]
-enemies = []
-
-#MAZE INIT
-maze = Maze(Default.MAZE_WIDTH, Default.MAZE_HEIGHT, enemies=enemies, items=items)
-maze.generate()
-maze.populate()
-
-player.print_status()
-maze.print(player.pos)
+enemies = [Enemies.IMP, Enemies.TROLL, Enemies.DRAGON]
 
 level = 0
 
@@ -59,9 +49,15 @@ def check_inventory():
             elif int(choice) == Actions.DISCARD_ITEM:
                 print(player.inventory[int(item)-1].name + " has been discarded.\n")
                 player.inventory.pop(int(item)-1)
+# MAZE INIT
+maze = Maze(Default.MAZE_WIDTH, Default.MAZE_HEIGHT, enemies=enemies, items=items)
+maze.generate()
+maze.populate()
+player.print_status()
+maze.print(player.pos)
 while not player.health <= 0:
     level += 1
-    while player.pos != (maze.height-2, maze.width-2) and not player.health <= 0:
+    while player.pos != (maze.height-2, maze.width-2) and player.health > 0:
         print("What action will you take?")
         for action in Actions:
             print(str(action.value) + " - " + str(action.name).replace("_", " "))
@@ -81,12 +77,15 @@ while not player.health <= 0:
             if maze.check_item(player.pos):
                 pick_up_item()
             maze.print(player.pos)
-    if player.pos == (maze.height-2, maze.width-2):
+    if player.pos == (maze.height-2, maze.width-2) and player.health > 0:
         print("You have completed level " + str(level) + ".")
         maze = Maze(maze.width + 2, maze.height + 2, enemies=enemies, items=items)
+        player.pos = (1,1)
+        player.max_health += 25
+        player.health += 25
+        print("Your max health has been raised by 25 HP.")
         maze.generate()
         maze.populate()
-        player.pos = (1,1)
         player.print_status()
         maze.print(player.pos)
 print("You died. You reached level " + str(level) + ".")
